@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'bloc/category_bloc.dart';
+import 'bloc/product_bloc.dart';
+import 'model/product_model.dart';
 import 'page/home_page.dart';
 import 'localization/translations_delegate.dart';
 import 'localization/translation.dart';
@@ -9,8 +11,7 @@ import 'model/category_model.dart';
 import 'widget/theme.dart';
 
 class App extends StatefulWidget {
-  const App({required this.categoryModel, super.key});
-  final CategoryModel categoryModel;
+  const App({required, super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -37,18 +38,23 @@ class _AppState extends State<App> {
       providers: [
         BlocProvider(
           create: (_) => CategoryBloc(
-            categoryModel: widget.categoryModel,
+            categoryModel: CategoryModel(),
           )..add(CategoryStarted()),
         ),
+        BlocProvider(create: (_) => ProductBloc(productModel: ProductModel())),
       ],
       child: MaterialApp(
           title: 'Ecom',
           theme: ThemeData(
             scaffoldBackgroundColor: backgroundColor,
             appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
+                surfaceTintColor: backgroundColor,
+                backgroundColor: Colors.transparent,
+                elevation: 0),
+            drawerTheme: DrawerThemeData(
+                backgroundColor: backgroundColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0))),
           ),
           localizationsDelegates: [
             _transalationDelegate,

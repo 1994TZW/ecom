@@ -1,3 +1,6 @@
 {
-    "home.category": "หมวดหมู่"
+    "home.category": "หมวดหมู่",
+    "home.search_placeholder":"คุณกำลังมองหาอะไร?",
+
+     "drawer.language.title":"ภาษา"
 }

@@ -1,4 +1,7 @@
 {
-    "home.category": "Categories"
+    "home.category": "Categories",
+    "home.search_placeholder":"What are you looking for?",
+    
+    "drawer.language.title":"Language"
     
 }

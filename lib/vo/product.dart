@@ -1,4 +1,4 @@
-class Item {
+class Product {
   final int id;
   final String title;
   final String description;
@@ -7,8 +7,8 @@ class Item {
   final int weight;
   final String thumbnail;
 
-  factory Item.fromMap(Map<String, dynamic> map) {
-    return Item(
+  factory Product.fromMap(Map<String, dynamic> map) {
+    return Product(
         id: map['id'] ?? 0,
         title: map['title'] ?? "",
         description: map['description'] ?? "",
@@ -20,7 +20,7 @@ class Item {
         weight: map['weight'] ?? 0);
   }
 
-  Item(
+  Product(
       {required this.id,
       required this.title,
       required this.description,

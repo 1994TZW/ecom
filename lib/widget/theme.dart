@@ -2,3 +2,43 @@ import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xff08489A);
 const backgroundColor = Color(0xFFFFFFFF);
+const cardBackgroundColor = Color(0xFFF5F8FB);
+const textColor = Color(0xFF000000);
+const lableColor = Color(0xFF8C8C8C);
+
+TextStyle newTextStyleEng(
+    {Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+    double? height,
+    bool underline = false,
+    Paint? foreground}) {
+  return TextStyle(
+      fontSize: fontSize ?? 13,
+      height: height,
+      color: foreground != null ? null : color ?? textColor,
+      fontWeight: fontWeight,
+      fontFamily: "Poppins",
+      decoration: underline ? TextDecoration.underline : TextDecoration.none,
+      foreground: foreground);
+}
+
+TextStyle newTextStyleThai(
+    {Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+    bool underline = false,
+    TextOverflow? textOverflow,
+    double? height,
+    Paint? foreground}) {
+  return TextStyle(
+      height: height,
+      overflow: textOverflow,
+      wordSpacing: 0,
+      fontSize: fontSize ?? 12,
+      color: foreground != null ? null : color ?? textColor,
+      fontWeight: fontWeight ?? FontWeight.w500,
+      decoration: underline ? TextDecoration.underline : TextDecoration.none,
+      fontFamily: "NotoSansThai",
+      foreground: foreground);
+}

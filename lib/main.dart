@@ -5,7 +5,6 @@ import 'package:logging/logging.dart';
 
 import 'app.dart';
 import 'app_bloc_observer.dart';
-import 'model/category_model.dart';
 
 void main() {
   Logger.root.level = Level.ALL; // defaults to Level.INFO
@@ -19,5 +18,5 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   Bloc.observer = AppBlocObserver();
-  runApp(App(categoryModel: CategoryModel()));
+  runApp(const App());
 }

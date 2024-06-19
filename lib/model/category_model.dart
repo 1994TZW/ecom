@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 
 import '../const.dart';
 import '../vo/category.dart';
-import '../vo/item.dart';
+import '../vo/product.dart';
 import 'package:http/http.dart' as http;
 
 class CategoryModel {
@@ -27,7 +27,7 @@ class CategoryModel {
 
         // get image url
         if (list.isNotEmpty) {
-          var firstItem = Item.fromMap(list.first as Map<String, dynamic>);
+          var firstItem = Product.fromMap(list.first as Map<String, dynamic>);
           c.imageUrl = firstItem.thumbnail;
         }
         categories.add(c);

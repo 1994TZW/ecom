@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../page/product_list.dart';
 import '../vo/category.dart';
+import 'theme.dart';
 
 class CategoryRow extends StatelessWidget {
   final Category category;
@@ -9,83 +12,72 @@ class CategoryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.all(6),
+    double itemSize = MediaQuery.of(context).size.width / 2 - 16 - 8;
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (context) => ProductList(category: category)));
+      },
+      child: SizedBox(
+        width: itemSize,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 150.0,
-                  height: 150.0,
-                  child: category.imageUrl == null || category.imageUrl == ''
-                      ? Container()
-                      // ClipRRect(
-                      //     borderRadius: BorderRadius.circular(3),
-                      //     child: const FadeInImage(
-                      //       placeholder: AssetImage('assets/placeholder.png'),
-                      //       image: AssetImage('assets/placeholder.png'),
-                      //       fit: BoxFit.fill,
-                      //     ))
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(3),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                            imageUrl: category.imageUrl!,
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.cover),
-                              ),
-                            ),
-                            // placeholder: (c, _) =>
-                            //     Image.asset("assets/placeholder.png"),
-                            // errorWidget: (context, url, error) {
-                            //   return Image.asset("assets/placeholder.png");
-                            // },
-                          ),
-                        ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
             SizedBox(
-              width: 150,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    category.name,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              width: itemSize,
+              height: itemSize,
+              child: Card(
+                color: cardBackgroundColor,
+                child: category.imageUrl == null || category.imageUrl == ''
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: const FadeInImage(
+                          placeholder: AssetImage('assets/logo.png'),
+                          image: AssetImage('assets/logo.png'),
+                          fit: BoxFit.cover,
+                        ))
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          imageUrl: category.imageUrl!,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                            ),
+                          ),
+                          placeholder: (context, url) => Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Builder(builder: (context) {
+                                return const SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                        color: primaryColor));
+                              }),
+                            ],
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
               ),
             ),
+            Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Text(category.name,
+                    style: newTextStyleEng(fontSize: 15, color: textColor)))
           ],
         ),
       ),
     );
-    // final textTheme = Theme.of(context).textTheme.titleLarge;
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    //   child: LimitedBox(
-    //     maxHeight: 48,
-    //     child: Row(
-    //       children: [
-    //         const AspectRatio(
-    //             aspectRatio: 1, child: ColoredBox(color: Colors.blue)),
-    //         const SizedBox(width: 24),
-    //         Expanded(child: Text(category.name, style: textTheme)),
-    //         const SizedBox(width: 24),
-    //         // AddButton(item: item),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
