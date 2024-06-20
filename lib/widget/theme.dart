@@ -11,6 +11,23 @@ const darkBackgroundColor = Color(0xFF000000);
 const darkTextColor = Color(0xFFFFFFFF);
 var darkCardBackgroundColor = Colors.grey.withOpacity(0.2);
 const darkDrawerBackgroundColor = Color(0xFF272727);
+const darkPlaceholderColor = Color(0xff272727);
+
+var placeholderGradient = LinearGradient(
+  colors: [
+    placeHolderColor,
+    const Color.fromRGBO(148, 148, 148, 1),
+   placeHolderColor,
+  ],
+  stops: const [
+    0.1,
+    0.3,
+    0.4,
+  ],
+  begin: const Alignment(-1.0, -0.3),
+  end: const Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
 
 TextStyle newTextStyleEng(
     {Color? color,
