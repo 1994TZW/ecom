@@ -1,6 +1,8 @@
 import 'package:ecom/widget/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/setting_bloc.dart';
 import '../localization/translation.dart';
 import '../widget/local_text.dart';
 
@@ -12,7 +14,6 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-  String? selectedLanguage;
   static final List<String> languagesList = Translation().supportedLanguages;
   static final List<String> languageCodesList =
       Translation().supportedLanguagesCodes;
@@ -23,78 +24,78 @@ class _DrawerMenuState extends State<DrawerMenu> {
   };
 
   @override
-  void initState() {
-    _buildLanguage();
-    super.initState();
-  }
-
-  _buildLanguage() async {
-    // var lan = await languageModel.load();
-    // if (selectedLanguage != lan) {
-    //   selectedLanguage = lan;
-    // }
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    bool darkModeOn =
+        context.watch<SettingBloc>().state.themeOption == ThemeOption.dark;
+
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset("assets/logo.png",
-                        height: 60, filterQuality: FilterQuality.medium),
+      child: BlocBuilder<SettingBloc, SettingState>(builder: (_, state) {
+        return ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset("assets/ecom_logo.png",
+                          height: 60, filterQuality: FilterQuality.medium),
+                    ),
                   ),
-                ),
-                IconButton(
-                    onPressed: () {},
-                    icon:
-                        const Icon(Icons.mode_night_rounded, color: textColor))
-              ],
+                  IconButton(
+                      onPressed: () =>
+                          _toggleTheme(context: context, state: state),
+                      icon: state.themeOption == ThemeOption.light
+                          ? const Icon(Icons.mode_night_rounded,
+                              color: textColor)
+                          : const Icon(Icons.sunny, color: darkTextColor))
+                ],
+              ),
             ),
-          ),
-          const Divider(),
-          buildLanguageWidget(
-              text: 'drawer.language.title', context: context, isEng: true)
-        ],
-      ),
+            Divider(
+              color: darkModeOn ? placeHolderColor : null,
+            ),
+            buildLanguageWidget(
+                context: context, state: state, darkModeOn: darkModeOn)
+          ],
+        );
+      }),
     );
   }
 
   Widget buildLanguageWidget(
-      {required String text,
-      required BuildContext context,
-      required bool isEng}) {
+      {required BuildContext context,
+      required SettingState state,
+      required bool darkModeOn}) {
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Row(
         children: <Widget>[
-          Image.asset('assets/language.jpg', fit: BoxFit.fitWidth, width: 25),
+          Icon(
+            Icons.language_outlined,
+            color: darkModeOn
+                ? darkTextColor.withOpacity(0.5)
+                : textColor.withOpacity(0.7),
+          ),
           const SizedBox(width: 10),
           Expanded(
-            child: LocalText(context, text, fontSize: 15.0, color: textColor),
+            child: LocalText(context, "drawer.language.title",
+                fontSize: 15.0, color: darkModeOn ? darkTextColor : textColor),
           ),
           Row(
             children: [
-              isEng
+              state.selectedLanguage == "English"
                   ? Image.asset(
-                      'assets/flag_us.jpg',
+                      'assets/flag_us.png',
                       fit: BoxFit.fitWidth,
                       width: 25,
                     )
                   : Image.asset(
-                      'assets/flag_th.jpg',
+                      'assets/flag_th.png',
                       fit: BoxFit.fitWidth,
                       width: 25,
                     ),
@@ -102,8 +103,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   width: 100,
                   padding: const EdgeInsets.only(left: 15),
                   child: DropdownButton(
-                      dropdownColor: backgroundColor,
-                      value: selectedLanguage,
+                      dropdownColor: darkModeOn
+                          ? darkDrawerBackgroundColor
+                          : backgroundColor,
+                      value: state.selectedLanguage,
                       underline: const SizedBox(),
                       isExpanded: true,
                       items: languagesList
@@ -112,8 +115,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
                             value: value,
                             child: Text(
                               value,
-                              style: const TextStyle(
-                                  fontSize: 15, fontFamily: "Poppins"),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: "Poppins",
+                                  color:
+                                      darkModeOn ? darkTextColor : textColor),
                             ));
                       }).toList(),
                       onChanged: _selectedDropdown)),
@@ -124,11 +130,18 @@ class _DrawerMenuState extends State<DrawerMenu> {
     );
   }
 
+  _toggleTheme({required BuildContext context, required SettingState state}) {
+    ThemeOption theme = state.themeOption == ThemeOption.light
+        ? ThemeOption.dark
+        : ThemeOption.light;
+
+    context.read<SettingBloc>().add(ThemeChanged(theme: theme));
+    Navigator.pop(context);
+  }
+
   _selectedDropdown(selected) {
-    // var languageModel = Provider.of<LanguageModel>(context, listen: false);
-    // languageModel.saveLanguage(selected);
-    setState(() {
-      selectedLanguage = selected;
-    });
+    context
+        .read<SettingBloc>()
+        .add(LanguageChanged(selectedLanguage: selected));
   }
 }

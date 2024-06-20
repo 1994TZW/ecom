@@ -1,7 +1,9 @@
+import 'package:ecom/model/setting_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'bloc/category_bloc.dart';
+import 'bloc/setting_bloc.dart';
 import 'bloc/product_bloc.dart';
 import 'model/product_model.dart';
 import 'page/home_page.dart';
@@ -37,31 +39,49 @@ class _AppState extends State<App> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => CategoryBloc(
-            categoryModel: CategoryModel(),
-          )..add(CategoryStarted()),
-        ),
+            create: (_) => CategoryBloc(
+                  categoryModel: CategoryModel(),
+                )..add(CategoryStarted())),
         BlocProvider(create: (_) => ProductBloc(productModel: ProductModel())),
+        BlocProvider(
+            create: (_) =>
+                SettingBloc(settingModel: SettingModel())..add(SettingLoaded()),
+            lazy: false),
       ],
-      child: MaterialApp(
-          title: 'Ecom',
-          theme: ThemeData(
-            scaffoldBackgroundColor: backgroundColor,
-            appBarTheme: const AppBarTheme(
-                surfaceTintColor: backgroundColor,
-                backgroundColor: Colors.transparent,
-                elevation: 0),
-            drawerTheme: DrawerThemeData(
-                backgroundColor: backgroundColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0))),
-          ),
-          localizationsDelegates: [
-            _transalationDelegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          home: const HomePage()),
+      child: BlocBuilder<SettingBloc, SettingState>(builder: (_, state) {
+        return MaterialApp(
+            title: 'Ecom',
+            theme: state.themeOption == ThemeOption.light
+                ? ThemeData(
+                    scaffoldBackgroundColor: backgroundColor,
+                    appBarTheme: const AppBarTheme(
+                        surfaceTintColor: backgroundColor,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0),
+                    drawerTheme: DrawerThemeData(
+                        backgroundColor: backgroundColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0))),
+                  )
+                : ThemeData(
+                    scaffoldBackgroundColor: darkBackgroundColor,
+                    appBarTheme: const AppBarTheme(
+                        surfaceTintColor: darkBackgroundColor,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0),
+                    drawerTheme: DrawerThemeData(
+                        backgroundColor: darkBackgroundColor,
+                        scrimColor: darkBackgroundColor.withOpacity(0.3),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0))),
+                  ),
+            localizationsDelegates: [
+              _transalationDelegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            home: const HomePage());
+      }),
     );
   }
 }

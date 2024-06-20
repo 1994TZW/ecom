@@ -7,8 +7,8 @@ sealed class ProductState {
 final class ProductLoading extends ProductState {}
 
 final class ProductLoaded extends ProductState {
-  const ProductLoaded({this.products = const []});
   final List<Product> products;
+  const ProductLoaded({this.products = const []});
 }
 
 final class ProductError extends ProductState {}

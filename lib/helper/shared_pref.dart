@@ -7,23 +7,23 @@ class SharedPref {
   static final SharedPref instance = SharedPref._();
   SharedPref._();
 
-  static Future<String?> getLang() async {
+  static Future<String?> getLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('language');
   }
 
-  static Future<void> saveLang(String lang) async {
+  static Future<void> saveLanguage(String lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('language', lang);
   }
 
-  static Future<bool?> getDarkMode() async {
+  static Future<String?> getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('dark_mode_on');
+    return prefs.getString('theme');
   }
 
-  static Future<void> saveStaffMode(bool darkMode) async {
+  static Future<void> saveTheme(String theme) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('dark_mode_on', darkMode);
+    prefs.setString('theme', theme);
   }
 }

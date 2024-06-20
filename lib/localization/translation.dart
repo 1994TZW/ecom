@@ -14,7 +14,7 @@ class Translation {
   final List<String> supportedLanguages = ["ไทย", "English"];
 
   final List<String> supportedLanguagesCodes = ["th", "en"];
-  static Locale defaultLocale = const Locale("en");
+  static Locale defaultLocale = const Locale("th");
 
   /// returns the list of supported Locales
   Iterable<Locale> supportedLocales() =>

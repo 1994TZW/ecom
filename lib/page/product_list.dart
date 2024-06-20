@@ -2,6 +2,8 @@ import 'package:ecom/widget/local_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/product_bloc.dart';
+import '../bloc/setting_bloc.dart';
+import '../widget/product_placeholder_row.dart';
 import '../widget/product_row.dart';
 import '../widget/theme.dart';
 import '../vo/category.dart';
@@ -31,6 +33,9 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
+    bool darkModeOn =
+        context.watch<SettingBloc>().state.themeOption == ThemeOption.dark;
+
     return Scaffold(
       body: RefreshIndicator(
         color: primaryColor,
@@ -42,20 +47,29 @@ class _ProductListState extends State<ProductList> {
               automaticallyImplyLeading: false,
               floating: true,
               snap: true,
-              backgroundColor: backgroundColor,
               flexibleSpace: LocalAppBar(
+                  backgroundColor:
+                      darkModeOn ? darkBackgroundColor : backgroundColor,
+                  arrowColor: darkModeOn ? darkTextColor : textColor,
                   titleWidget: Text(widget.category.name,
-                      style: newTextStyleEng(fontSize: 20, color: textColor))),
+                      style: newTextStyleEng(
+                          fontSize: 20,
+                          color: darkModeOn ? darkTextColor : textColor))),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 10)),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
                 return switch (state) {
-                  ProductLoading() => const SliverFillRemaining(
-                      child: Center(
-                          child: CircularProgressIndicator(
-                        color: primaryColor,
-                      )),
+                  ProductLoading() => SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Wrap(
+                          spacing: 16,
+                          runSpacing: 12,
+                          children: List.generate(
+                              6, (index) => const ProductPlaceholderRow()),
+                        ),
+                      ),
                     ),
                   ProductError() => const SliverFillRemaining(
                       child: Text('Something went wrong!',
