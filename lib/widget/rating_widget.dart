@@ -17,12 +17,10 @@ class RatingWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Icon(Icons.star, color: Colors.yellow, size: 11),
+          Icon(Icons.star, color: ratingColor, size: 11),
           const SizedBox(width: 3),
-          Text(
-            '$value',
-            style: const TextStyle(color: backgroundColor, fontSize: 12)
-          ),
+          Text('$value',
+              style: const TextStyle(color: backgroundColor, fontSize: 12)),
         ],
       ),
     );

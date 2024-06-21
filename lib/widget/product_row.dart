@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecom/vo/product.dart';
 import 'package:ecom/widget/util.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/setting_bloc.dart';
+import '../page/product_detail.dart';
 import 'rating_widget.dart';
 import 'theme.dart';
 
@@ -18,7 +20,12 @@ class ProductRow extends StatelessWidget {
         context.watch<SettingBloc>().state.themeOption == ThemeOption.dark;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (context) => ProductDetail(product: product)));
+      },
       child: SizedBox(
         width: itemSize,
         child: Column(

@@ -6,6 +6,9 @@ const cardBackgroundColor = Color(0xFFF5F8FB);
 const textColor = Color(0xFF000000);
 const lableColor = Color(0xFF8C8C8C);
 var placeHolderColor = Colors.grey.withOpacity(0.2);
+const separatorColor = Color(0xFFE0E0E0);
+const reviewerPlaceholderColor = Color(0xFFD9D9D9);
+var ratingColor = Colors.orange[400];
 
 const darkBackgroundColor = Color(0xFF000000);
 const darkTextColor = Color(0xFFFFFFFF);
@@ -17,7 +20,7 @@ var placeholderGradient = LinearGradient(
   colors: [
     placeHolderColor,
     const Color.fromRGBO(148, 148, 148, 1),
-   placeHolderColor,
+    placeHolderColor,
   ],
   stops: const [
     0.1,

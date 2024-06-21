@@ -2,5 +2,14 @@
     "home.category": "หมวดหมู่",
     "home.search_placeholder":"คุณกำลังมองหาอะไร?",
 
-     "drawer.language.title":"ภาษา"
+    "drawer.language.title":"ภาษา",
+
+    "product.brand":"ยี่ห้อ",
+    "product.weight":"น้ำหนัก",
+    "product.dimension":"ขนาด\n(L x W x H)",
+    "product.warranty":"การรับประกัน",
+    "product.shipping" :"การส่งสินค้า",
+    "product.status":"สถานะ",
+    "product.desc":"คำอธิบาย",
+    "product.review":"บทวิจารณ์"
 }

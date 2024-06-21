@@ -57,7 +57,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ),
             ),
             Divider(
-              color: darkModeOn ? placeHolderColor : null,
+              color: darkModeOn ? placeHolderColor : separatorColor,
             ),
             buildLanguageWidget(
                 context: context, state: state, darkModeOn: darkModeOn)

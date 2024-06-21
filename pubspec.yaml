@@ -17,6 +17,7 @@ dependencies:
   cached_network_image: ^3.3.1
   logging: ^1.2.0
   shared_preferences: ^2.2.3
+  smooth_star_rating_null_safety: ^1.0.4+2
 
 dev_dependencies:
   flutter_test:

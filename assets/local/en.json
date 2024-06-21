@@ -2,6 +2,15 @@
     "home.category": "Categories",
     "home.search_placeholder":"What are you looking for?",
     
-    "drawer.language.title":"Language"
+    "drawer.language.title":"Language",
+
+    "product.brand":"Brand",
+    "product.weight":"Weight",
+    "product.dimension":"Dimensions\n(L x W x H)",
+    "product.warranty":"Warranty",
+    "product.shipping" :"Shipping",
+    "product.status":"Status",
+    "product.desc":"Description",
+    "product.review":"Reviews"
     
 }
