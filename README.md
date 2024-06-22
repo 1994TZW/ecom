@@ -1,16 +1,12 @@
-# ecom
+# A eCommerce app built with Flutter
 
-A new Flutter project.
+Welcome to the E-commerce App UI project! This project showcases a user interface (UI) design concept for a e-commerce mobile application. Below, you will view screenshots of the UI about project.
 
-## Getting Started
+## Light Mode
 
-This project is a starting point for a Flutter application.
+![Alt text](https://github.com/1994TZW/ecom/blob/main/assets/ecom_light.jpg?raw=true)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dark Mode
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Alt text](https://github.com/1994TZW/ecom/blob/main/assets/ecom_dark.jpg?raw=true)
